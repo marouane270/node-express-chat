@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
-const testSchema = mongoose.Schema({
+//shéma pour BDD MongoDB
+const schemaChat = mongoose.Schema({
+
+  userId: {type: String, required: true},
+  username: {type: String, required: true},
+  sessionId: {type: String, required:true},
   text: { type: String, required: true },
-  number: { type: Number, required: true },
+
+  
 });
 
-module.exports = mongoose.model('Test', clickSchema);
+module.exports = mongoose.model('Test', schemaChat);

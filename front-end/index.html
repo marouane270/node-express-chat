@@ -1,120 +1,201 @@
 <!DOCTYPE html>
 <html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Node chat</title>
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Node chat</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"
+      integrity="sha512-N5JbZMETkl+0SZh5l8OA2VxSfF120owfQyy54iAXTJIKuqAn3A9TrNz1ypB55o8aSU5MxaodEgv74wGUvgUynQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="text/javascript" src="main.js" defer></script>
+  </head>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-	<link rel="stylesheet" href="style.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"
-		integrity="sha512-N5JbZMETkl+0SZh5l8OA2VxSfF120owfQyy54iAXTJIKuqAn3A9TrNz1ypB55o8aSU5MxaodEgv74wGUvgUynQ=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script type="text/javascript" src="main.js" defer></script>
-</head>
+  <body>
+    <script
+      src="https://cdn.socket.io/3.1.3/socket.io.min.js"
+      integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh"
+      crossorigin="anonymous"
+    ></script>
 
-<body>
-	<!---
+    <!---
     HTML/CSS implementation of HipChat redesign
     Source: https://codepen.io/CucuIonel/pen/HzLtC
     -->
-	<div class="window-wrapper">
-		<div class="window-title">
-			<div class="dots">
-				<i class="fa fa-circle"></i>
-				<i class="fa fa-circle"></i>
-				<i class="fa fa-circle"></i>
-			</div>
-			<div class="title">
-				<span>RIL - CHAT</span>
-			</div>
-			<div class="expand">
-				<i class="fa fa-expand"></i>
-			</div>
-		</div>
-		<div class="window-area">
-			<div class="conversation-list">
-				<ul class="">
-					<li class="item"><a href="#"><i class="fa fa-list-alt"></i><span>Dashboard</span></a></li>
-					<li class="item active">
-						<a href="#">
-							<i class="fa fa-user"></i>
-							<span>Team chat</span>
-							<i class="fa fa-times"></i>
-						</a>
-					</li>
-				</ul>
-				<div class="my-account">
-					<div class="image">
-						<img src="https://thispersondoesnotexist.com/image">
-						<i class="fa fa-circle online"></i>
-					</div>
-					<div class="name">
-						<span>John Doe</span>
-						<i class="fa fa-angle-down"></i>
-						<span class="availability">Available</span>
-					</div>
+    <div class="window-wrapper">
+      <div class="window-title">
+        <div class="dots">
+          <i class="fa fa-circle"></i>
+          <i class="fa fa-circle"></i>
+          <i class="fa fa-circle"></i>
+        </div>
+        <div class="title">
+          <span>RIL - CHAT</span>
+        </div>
+        <div class="expand">
+          <i class="fa fa-expand"></i>
+        </div>
+      </div>
+      <div class="window-area">
+        <div class="conversation-list">
+          <ul class="">
+            <li class="item ">
+              <a href="#"
+                ><i class="fa fa-list-alt"></i><span>Dashboard</span></a
+              >
+            </li>
+            <li class="item active">
+              <a href="#">
+                <i class="fa fa-user"></i>
+                <span>Team chat</span>
+                <i class="fa fa-times"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="my-account">
+            <div class="image">
+              <img src="https://thispersondoesnotexist.com/image" />
+              <i class="fa fa-circle online"></i>
+            </div>
+            <div class="name">
+              <span>John Doe</span>
+              <i class="fa fa-angle-down"></i>
+              <span class="availability">Available</span>
+            </div>
+          </div>
+        </div>
+        <div class="chat-area">
+          <div class="title">
+            <b>Conversation title</b><i class="fa fa-search"></i>
+          </div>
+          <div class="chat-list">
+            <ul>
+              <li class="me">
+                
+              </li>
+              <li id="li1" class="me"></li>
+            </ul>
+          </div>
+          <div class="input-area">
+            <div class="input-wrapper">
+              <input id="msg" type="text" value="" placeholder="Message here" />
+              <i class="fa fa-smile-o"></i>
+            </div>
+            <input id="addMess" type="button" value="Submit" class="send-btn" />
+          </div>
+        </div>
+        <div class="right-tabs">
+          <ul class="tabs">
+            <li class="active">
+              <a href="#"><i class="fa fa-users"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-paperclip"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-link"></i></a>
+            </li>
+          </ul>
+          <ul class="tabs-container">
+            <li class="active">
+              <ul class="member-list">
+                <li>
+                  <span class="status online"
+                    ><i class="fa fa-circle-o"></i></span
+                  ><span>John Doe</span>
+                </li>
+                <li>
+                  <span class="status online"
+                    ><i class="fa fa-circle-o"></i></span
+                  ><span>Christian Smith</span>
+                </li>
+              </ul>
+            </li>
+            <li></li>
+            <li></li>
+          </ul>
+          <i class="fa fa-cog"></i>
+        </div>
+      </div>
+    </div>
+    <script>
 
-				</div>
-			</div>
-			<div class="chat-area">
-				<div class="title"><b>Conversation title</b><i class="fa fa-search"></i></div>
-				<div class="chat-list">
-					<ul>
-						<li class="me">
-							<div class="name">
-								<span class="">John Doe</span>
-							</div>
-							<div class="message">
-								<p>Hello</p>
-								<span class="msg-time">5:00 pm</span>
-							</div>
-						</li>
-						<li class="">
-							<div class="name">
-								<span class="">Christian Smith</span>
-							</div>
-							<div class="message">
-								<p>World</p>
-								<span class="msg-time">5:01 pm</span>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="input-area">
-					<div class="input-wrapper">
-						<input type="text" value="" placeholder="Message here">
-						<i class="fa fa-smile-o"></i>
-					</div>
-					<input type="button" value="Submit" class="send-btn">
-				</div>
-			</div>
-			<div class="right-tabs">
-				<ul class="tabs">
-					<li class="active">
-						<a href="#"><i class="fa fa-users"></i></a>
-					</li>
-					<li><a href="#"><i class="fa fa-paperclip"></i></a></li>
-					<li><a href="#"><i class="fa fa-link"></i></a></li>
-				</ul>
-				<ul class="tabs-container">
-					<li class="active">
-						<ul class="member-list">
-							<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>John Doe</span>
-							</li>
-							<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian
-									Smith</span></li>
-						</ul>
-					</li>
-					<li></li>
-					<li></li>
-				</ul>
-				<i class="fa fa-cog"></i>
-			</div>
-		</div>
-	</div>
-</body>
+      
+      // https://gist.github.com/gordonbrander/2230317
+      //Permet de faire un id Unique
+      const ID = function() {
+        return (
+          "_" +
+          Math.random().toString(36).substr(2, 9)
+        );
+      };
 
+      let userId = "";
+      //condition permettant de mettre un idUnique au utilisateur qui n'en n'ont pas
+      if (localStorage.getItem("userId")) {
+        userId = localStorage.getItem("userId");
+      } else {
+        const id = ID();
+        localStorage.setItem("userId", id);
+        userId = id;
+      }
+
+      const socket = io("http://localhost:3000");
+
+      let message = document.getElementById("msg");
+      let button = document.getElementById("addMess");
+      console.log(button);
+
+      // fonction permettant d'ajouter le msg écrit sur le text box
+    function addMessNew() {
+			var today = new Date();
+			const li = document.createElement("li");
+			const divName = document.createElement("div");
+
+			divName.className = "name";
+
+			const divMessage = document.createElement("div");
+
+			divMessage.className = "message";
+
+			const spanName = document.createElement("span");
+
+			spanName.className = "";
+
+			spanName.innerText = "John Boe";
+
+			const spanTime = document.createElement("span");
+			spanTime.className = "msg-time";
+
+			spanTime.innerText = today.getHours() + ":" + today.getMinutes();
+
+			const p = document.createTextNode(message.value);
+			divName.appendChild(spanName);
+			divMessage.appendChild(p);
+			divMessage.appendChild(spanTime);
+
+			var currentUl = document.getElementById("li1");
+			currentUl.appendChild(divName, divMessage);
+			currentUl.appendChild(divMessage);
+
+			socket.emit("plus-one-chat", message.value, today, userId);
+		}
+
+      button.addEventListener("click", addMessNew);
+
+      socket.on("notif", function(msg) {
+        console.log("Nouvelle notification: ", msg);
+      });
+
+    </script>
+  </body>
 </html>
